@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Two Chairs — Performance Insights — May 18 – June 9, 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-font-smoothing:antialiased}
+body{font-family:'DM Sans',-apple-system,sans-serif;background:#f4f4f0;color:#1a1a1a;min-height:100vh;padding:24px;line-height:1.55;font-size:14px}
+.container{max-width:1380px;margin:0 auto}
+
+.cover{background:linear-gradient(135deg,#003d2b 0%,#00754a 50%,#00a651 100%);color:#fff;padding:36px 40px;border-radius:14px;margin-bottom:18px;position:relative;overflow:hidden}
+.cover::before{content:"";position:absolute;top:-50%;right:-20%;width:500px;height:500px;border-radius:50%;background:rgba(255,255,255,0.04)}
+.cover-pill{font-size:10px;font-weight:600;letter-spacing:1.4px;color:#a8e6c1;background:rgba(255,255,255,0.1);padding:5px 12px;border-radius:20px;display:inline-block;margin-bottom:14px}
+.cover h1{font-size:36px;font-weight:700;letter-spacing:-0.6px;line-height:1.1;margin-bottom:8px}
+.cover .sub{font-size:16px;opacity:.9;margin-bottom:6px}
+.cover .meta{font-size:12px;opacity:.75;letter-spacing:.5px;margin-top:18px}
+
+.kpi-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:18px}
+@media(max-width:1100px){.kpi-strip{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:600px){.kpi-strip{grid-template-columns:repeat(2,1fr)}}
+.kpi{background:#fff;border:1px solid #e5e5e0;border-radius:10px;padding:14px 16px}
+.kpi .l{font-size:9px;color:#6b6b66;letter-spacing:.5px;text-transform:uppercase;font-weight:600;margin-bottom:6px}
+.kpi .v{font-size:22px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.05;letter-spacing:-0.4px}
+.kpi .s{font-size:11px;color:#6b6b66;margin-top:3px}
+
+.tabs{display:flex;gap:1px;background:#fff;border:1px solid #e5e5e0;border-radius:12px 12px 0 0;padding:6px 6px 0;border-bottom:none;overflow-x:auto}
+.tab{flex:1;min-width:130px;padding:13px 10px;cursor:pointer;font-size:11px;font-weight:600;color:#6b6b66;border:none;background:transparent;font-family:inherit;text-align:center;border-radius:8px 8px 0 0;border-bottom:3px solid transparent;transition:all .15s;line-height:1.3}
+.tab:hover{color:#1a1a1a;background:#fafaf8}
+.tab.active{color:#00a651;border-bottom-color:#00a651;background:rgba(0,166,81,0.04)}
+.tab-num{display:block;font-size:9px;color:#b8b8b0;letter-spacing:.4px;font-weight:600;margin-bottom:3px}
+.tab.active .tab-num{color:#5db589}
+
+.panel{background:#fff;border:1px solid #e5e5e0;border-radius:0 0 12px 12px;padding:30px 38px;display:none;min-height:480px}
+.panel.active{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.panel-header{margin-bottom:22px;border-bottom:1px solid #f0efe8;padding-bottom:18px}
+.panel-eyebrow{font-size:10px;font-weight:600;letter-spacing:1.2px;color:#00a651;text-transform:uppercase;margin-bottom:8px}
+.panel-title{font-size:25px;font-weight:700;line-height:1.2;margin-bottom:8px;letter-spacing:-0.4px}
+.panel-sub{font-size:14px;color:#555;max-width:980px;line-height:1.6}
+
+.section-title{font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:#6b6b66;margin:24px 0 12px;display:flex;align-items:center;gap:8px}
+.section-title::before{content:"";width:3px;height:13px;background:#00a651;border-radius:2px}
+
+.hero-quote{background:linear-gradient(135deg,#eff7ee,#f4faf2);border-left:3px solid #00a651;padding:18px 22px;margin-bottom:18px;border-radius:0 8px 8px 0;font-size:15px;line-height:1.55;color:#085041;font-weight:500}
+
+.stat-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-bottom:14px}
+.stat-box{background:#fafaf8;border:1px solid #f0efe8;border-radius:10px;padding:13px 16px}
+.stat-box .l{font-size:10px;color:#6b6b66;letter-spacing:.3px;text-transform:uppercase;font-weight:600;margin-bottom:5px}
+.stat-box .v{font-size:21px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.1;letter-spacing:-0.3px}
+.stat-box .s{font-size:11px;color:#6b6b66;margin-top:3px}
+.stat-box.win{background:#eff7ee;border-color:#cae8c4}.stat-box.win .v{color:#00754a}
+.stat-box.hi{background:#eef5fc;border-color:#c8def0}.stat-box.hi .v{color:#0c447c}
+.stat-box.warn{background:#faeeda;border-color:#f0d9b8}.stat-box.warn .v{color:#854f0b}
+
+.insight-box{background:#eef5fc;border:1px solid #c8def0;border-radius:10px;padding:14px 18px;margin-top:12px;font-size:13px;line-height:1.6;color:#0c4d8a}
+.insight-box.win{background:#e1f5ee;border-color:#c8e8d4;color:#085041}
+.insight-box.win::before{content:"✓ What's working · ";font-weight:700;letter-spacing:.5px;text-transform:uppercase;font-size:11px;display:block;margin-bottom:6px;color:#00754a}
+.insight-box.opp{background:#fff8e6;border-color:#f0d9b8;color:#854f0b}
+.insight-box.opp::before{content:"→ Opportunity · ";font-weight:700;letter-spacing:.5px;text-transform:uppercase;font-size:11px;display:block;margin-bottom:6px;color:#854f0b}
+.insight-box.plan{background:#eef5fc;border-color:#c8def0;color:#0c4d8a}
+.insight-box.plan::before{content:"▸ Our next step · ";font-weight:700;letter-spacing:.5px;text-transform:uppercase;font-size:11px;display:block;margin-bottom:6px;color:#0c447c}
+
+.region-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+.region-card{background:#fafaf8;border:1px solid #f0efe8;border-radius:10px;padding:16px;border-left:3px solid #00a651}
+.region-card.amber{border-left-color:#ef9f27}
+.region-card.blue{border-left-color:#1a6bff}
+.region-card.purple{border-left-color:#7681E8}
+.region-head{font-size:14px;font-weight:700;margin-bottom:4px}
+.region-sub{font-size:11px;color:#6b6b66;margin-bottom:10px}
+.region-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.region-stat .l{font-size:9px;color:#9b9b96;text-transform:uppercase;letter-spacing:.3px;font-weight:600;margin-bottom:2px}
+.region-stat .v{font-size:14px;font-weight:700;font-variant-numeric:tabular-nums}
+.region-prose{font-size:12.5px;color:#444;line-height:1.6;margin-top:10px}
+
+table.report{width:100%;border-collapse:collapse;font-size:13px}
+table.report th{text-align:left;padding:10px 12px;font-size:10px;letter-spacing:.4px;text-transform:uppercase;color:#6b6b66;border-bottom:1px solid #e5e5e0;font-weight:600;background:#fafaf8;white-space:nowrap}
+table.report th.num,table.report td.num{text-align:right;font-variant-numeric:tabular-nums}
+table.report td{padding:10px 12px;border-bottom:1px solid #f0efe8}
+table.report tr:last-child td{border-bottom:none}
+.total-row td{background:#f7f7f5!important;font-weight:700}
+.win-cell{color:#00754a;font-weight:600}
+.warn-cell{color:#854f0b;font-weight:600}
+
+.pill{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:100px;font-size:10px;font-weight:600}
+.pill::before{content:"";width:6px;height:6px;border-radius:50%}
+.pill-green{background:#e1f5ee;color:#00754a}.pill-green::before{background:#00a651}
+.pill-amber{background:#faeeda;color:#854f0b}.pill-amber::before{background:#ef9f27}
+.pill-blue{background:#e6f1fb;color:#0c447c}.pill-blue::before{background:#1a6bff}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:900px){.two-col{grid-template-columns:1fr}}
+.chart-wrap{background:#fafaf8;border:1px solid #f0efe8;border-radius:10px;padding:18px}
+.chart-wrap-title{font-size:11px;font-weight:600;color:#6b6b66;letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px}
+.chart-canvas{position:relative;height:280px}
+.chart-canvas.short{height:230px}
+.chart-canvas.tall{height:340px}
+
+.recs-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:12px}
+.rec-card{background:#fff;border:1px solid #e5e5e0;border-radius:10px;padding:16px 18px;border-left:4px solid #00a651}
+.rec-card .head{font-size:14px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:10px}
+.rec-card .num{background:#00a651;color:#fff;width:22px;height:22px;border-radius:11px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+.rec-card .body{font-size:13px;color:#444;line-height:1.6;margin-top:4px}
+.rec-card .channel-tag{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;background:#f0efe8;color:#555;padding:3px 8px;border-radius:4px;margin-left:auto}
+.rec-card.meta-rec{border-left-color:#1a6bff}
+.rec-card.meta-rec .num{background:#1a6bff}
+.rec-card.google-rec{border-left-color:#00a651}
+.rec-card.li-rec{border-left-color:#7681E8}
+.rec-card.li-rec .num{background:#7681E8}
+.rec-card.budget-rec{border-left-color:#ef9f27}
+.rec-card.budget-rec .num{background:#ef9f27}
+
+.footer{margin-top:18px;text-align:center;font-size:11px;color:#9b9b96;padding:12px 0}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- COVER -->
+  <div class="cover">
+    <div class="cover-pill">CAMPAIGN PERFORMANCE INSIGHTS</div>
+    <h1>Two Chairs — Therapist Recruitment</h1>
+    <div class="sub">May 18 – June 9, 2026 · 23-day performance window · CA &amp; WA markets</div>
+    <div class="meta">JOVEO × TWO CHAIRS · Google · Meta · LinkedIn · Channel + message + audience deep-dive</div>
+  </div>
+
+  <!-- KPI STRIP -->
+  <div class="kpi-strip">
+    <div class="kpi"><div class="l">Total Spend</div><div class="v">$3,025</div><div class="s">across 3 channels</div></div>
+    <div class="kpi"><div class="l">Impressions</div><div class="v">516.7K</div><div class="s">Meta 77% · LI 22% · Google 1%</div></div>
+    <div class="kpi"><div class="l">Clicks</div><div class="v">7,068</div><div class="s">blended CTR 1.37%</div></div>
+    <div class="kpi"><div class="l">Blended CPC</div><div class="v">$0.43</div><div class="s">Meta cheapest · Google premium</div></div>
+    <div class="kpi"><div class="l">Apply Finishes</div><div class="v">14</div><div class="s">WA: 14 · CA: 0 (see CA vs WA tab)</div></div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab active" data-tab="summary"><span class="tab-num">01</span>Summary</button>
+    <button class="tab" data-tab="google"><span class="tab-num">02</span>Google</button>
+    <button class="tab" data-tab="meta"><span class="tab-num">03</span>Meta</button>
+    <button class="tab" data-tab="linkedin"><span class="tab-num">04</span>LinkedIn</button>
+    <button class="tab" data-tab="cawa"><span class="tab-num">05</span>CA vs WA</button>
+    <button class="tab" data-tab="recs"><span class="tab-num">06</span>What We'll Improve</button>
+  </div>
+
+  <!-- 01 SUMMARY -->
+  <div class="panel active" id="summary">
+    <div class="panel-header">
+      <div class="panel-eyebrow">01 · The period in brief</div>
+      <h2 class="panel-title">The campaign is generating strong engagement. Washington is converting it; California is the next unlock.</h2>
+      <p class="panel-sub">Across 23 days and three paid channels, the program delivered <strong>516.7K impressions, 7,068 clicks, and 14 apply finishes</strong>. Washington produced all 14 apply finishes — 9 on LinkedIn (6 in May, 3 in June) and 5 on Meta (June). California drew strong engagement (53% of total clicks, higher Meta CTR than WA) but those clicks haven't converted yet. Our analysis below shows the message that resonates in each market and the platform-level changes we're rolling out to lift California into the conversion column.</p>
+    </div>
+
+    <div class="hero-quote">"Washington is converting; California is engaging. The next cycle is about closing the gap — and we have clear, channel-specific moves to do it."</div>
+
+    <div class="section-title">Headline numbers</div>
+    <div class="stat-strip">
+      <div class="stat-box hi"><div class="l">Spend</div><div class="v">$3,025</div><div class="s">$1,499 CA · $1,482 WA</div></div>
+      <div class="stat-box win"><div class="l">Impressions</div><div class="v">516.7K</div><div class="s">CA 49% · WA 51%</div></div>
+      <div class="stat-box win"><div class="l">Clicks</div><div class="v">7,068</div><div class="s">CA 53% · WA 47%</div></div>
+      <div class="stat-box win"><div class="l">Blended CTR</div><div class="v">1.37%</div><div class="s">healthy for mixed mix</div></div>
+      <div class="stat-box warn"><div class="l">Apply Finishes</div><div class="v">14</div><div class="s">all from Washington</div></div>
+    </div>
+
+    <div class="insight-box win"><strong>LinkedIn is the conversion engine.</strong> 9 of 14 apply finishes from LinkedIn (6 in May, 3 in June) on 40% of total spend. Meta added its first 5 apply finishes in June, also from Washington. The channel mix is doing what we designed it to do for WA — LinkedIn for high-intent professional engagement, Meta for reach and second-touch.</div>
+
+    <div class="insight-box win"><strong>Value-prop signals are clear and different by market.</strong> California therapists respond strongest to <strong>Compensation</strong> and <strong>Compensation &amp; Autonomy</strong>. Washington therapists respond strongest to <strong>Clinical Community &amp; Training</strong> (3.12% LinkedIn CTR — the highest cell in the program) and <strong>Reduced Burnout</strong>. Same campaign, different value-prop emphasis per market is the move.</div>
+
+    <div class="insight-box opp"><strong>California's engagement isn't translating yet.</strong> 53% of clicks, 0 apply finishes so far. The pattern points to Meta placement quality (Audience Network = 76% of Meta impressions) and creative-message fit (CA prefers compensation framing, not mentorship). We're addressing both via Meta placement separation and a California-specific creative mix.</div>
+
+    <div class="section-title">Top three takeaways</div>
+    <div class="region-grid">
+      <div class="region-card"><div class="region-head">CHANNEL</div>
+        <div class="region-sub">LinkedIn = conversion · Meta = reach · Google = intent</div>
+        <p class="region-prose">Each channel doing its designed role. LinkedIn drives <strong>9 of 14</strong> applies on 40% of spend. Meta delivers cost-efficient reach + first June apply finishes. Google posts the highest CTR (3.88%) on the smallest budget — high-intent traffic when we want it.</p></div>
+      <div class="region-card amber"><div class="region-head">MESSAGE</div>
+        <div class="region-sub">Two distinct value-prop preferences by market</div>
+        <p class="region-prose"><strong>CA</strong> hooks on: Compensation, Compensation &amp; Autonomy. <strong>WA</strong> hooks on: Clinical Community &amp; Training, Reduced Burnout. We'll split creative emphasis by market for the next cycle.</p></div>
+      <div class="region-card blue"><div class="region-head">AUDIENCE</div>
+        <div class="region-sub">Older searchers on Google · younger engagers on Meta</div>
+        <p class="region-prose">Google CTR climbs with age (9% at 65+). Meta CTR drops with age (0.81% at 65+). We'll tighten Meta age targeting and lean into older-skew Google keywords.</p></div>
+    </div>
+  </div>
+
+  <!-- 02 GOOGLE -->
+  <div class="panel" id="google">
+    <div class="panel-header">
+      <div class="panel-eyebrow">02 · Google Search</div>
+      <h2 class="panel-title">Highest CTR of any channel — Search is working, and we're going to scale it.</h2>
+      <p class="panel-sub">Google Search drove $562 of spend across 12 days (May 25 – June 5) and posted a <strong>3.88% blended CTR</strong> — the highest of any channel in the program. Licensure-specific keywords (LCSW, LMFT) and "near me" terms are pulling the strongest. We're rolling out two new ad formats below to capture more of this high-intent demand.</p>
+    </div>
+
+    <div class="stat-strip">
+      <div class="stat-box hi"><div class="l">Spend</div><div class="v">$562</div><div class="s">19% of total program</div></div>
+      <div class="stat-box win"><div class="l">Impressions</div><div class="v">3,810</div><div class="s">tightly targeted</div></div>
+      <div class="stat-box win"><div class="l">Clicks</div><div class="v">148</div><div class="s">all keyword-qualified</div></div>
+      <div class="stat-box win"><div class="l">CTR</div><div class="v">3.88%</div><div class="s">best of all channels</div></div>
+      <div class="stat-box warn"><div class="l">CPC</div><div class="v">$3.80</div><div class="s">premium · search market</div></div>
+    </div>
+
+    <div class="section-title">CA vs WA · Google</div>
+    <table class="report">
+      <thead><tr><th>Geo</th><th class="num">Spend</th><th class="num">Impr</th><th class="num">Clicks</th><th class="num">CTR</th><th class="num">CPC</th><th>Read</th></tr></thead>
+      <tbody>
+        <tr><td><strong>California</strong></td><td class="num">$301.97</td><td class="num">2,793</td><td class="num">106</td><td class="num win-cell">3.80%</td><td class="num">$2.85</td><td><span class="pill pill-green">Volume leader</span></td></tr>
+        <tr><td><strong>Washington</strong></td><td class="num">$260.11</td><td class="num">1,017</td><td class="num">42</td><td class="num win-cell">4.13%</td><td class="num">$6.19</td><td><span class="pill pill-green">Higher CTR · pricier</span></td></tr>
+        <tr class="total-row"><td>Total</td><td class="num">$562.07</td><td class="num">3,810</td><td class="num">148</td><td class="num">3.88%</td><td class="num">$3.80</td><td>—</td></tr>
+      </tbody>
+    </table>
+
+    <div class="section-title">Top keywords (by clicks)</div>
+    <table class="report">
+      <thead><tr><th>Keyword</th><th class="num">Impr</th><th class="num">Clicks</th><th class="num">CTR</th><th class="num">Cost</th></tr></thead>
+      <tbody>
+        <tr><td>Therapist jobs near me</td><td class="num">1,618</td><td class="num">65</td><td class="num">4.02%</td><td class="num">$215.10</td></tr>
+        <tr><td>Therapist jobs</td><td class="num">526</td><td class="num">27</td><td class="num">5.13%</td><td class="num">$158.40</td></tr>
+        <tr><td>therapy jobs</td><td class="num">300</td><td class="num">9</td><td class="num">3.00%</td><td class="num">$19.90</td></tr>
+        <tr><td>employment opportunities in therapy</td><td class="num">123</td><td class="num">8</td><td class="num win-cell">6.50%</td><td class="num">$23.55</td></tr>
+        <tr><td>therapist careers</td><td class="num">201</td><td class="num">7</td><td class="num">3.48%</td><td class="num">$15.72</td></tr>
+        <tr><td>mental health employment opportunities</td><td class="num">126</td><td class="num">6</td><td class="num">4.76%</td><td class="num">$29.61</td></tr>
+        <tr><td>LCSW jobs</td><td class="num">120</td><td class="num">4</td><td class="num">3.33%</td><td class="num">$16.15</td></tr>
+        <tr><td>marriage and family therapist jobs</td><td class="num">17</td><td class="num">3</td><td class="num win-cell">17.65%</td><td class="num">$14.50</td></tr>
+        <tr><td>LMFT jobs</td><td class="num">60</td><td class="num">3</td><td class="num">5.00%</td><td class="num">$13.03</td></tr>
+      </tbody>
+    </table>
+
+    <div class="insight-box win"><strong>"Therapist jobs near me" is the workhorse</strong> — 44% of all Search clicks. Licensure-specific terms (LCSW, LMFT, marriage and family therapist) post the highest CTRs (5–18%). The licensure-tail keyword strategy is validated and we'll expand it.</div>
+
+    <div class="section-title">Audience — Google CTR by age</div>
+    <div class="chart-wrap"><div class="chart-wrap-title">Google · CTR climbs steadily with age</div>
+      <div class="chart-canvas short"><canvas id="ageGoogle"></canvas></div></div>
+    <table class="report" style="margin-top:14px">
+      <thead><tr><th>Age Bracket</th><th class="num">Impressions</th><th class="num">Clicks</th><th class="num">CTR</th></tr></thead>
+      <tbody>
+        <tr><td>18–24</td><td class="num">430</td><td class="num">14</td><td class="num">3.26%</td></tr>
+        <tr><td>25–34</td><td class="num">1,484</td><td class="num">49</td><td class="num">3.30%</td></tr>
+        <tr><td>35–44</td><td class="num">928</td><td class="num">36</td><td class="num">3.88%</td></tr>
+        <tr><td>45–54</td><td class="num">590</td><td class="num">24</td><td class="num win-cell">4.07%</td></tr>
+        <tr><td>55–64</td><td class="num">271</td><td class="num">16</td><td class="num win-cell">5.90%</td></tr>
+        <tr><td>65+</td><td class="num">100</td><td class="num">9</td><td class="num win-cell">9.00%</td></tr>
+      </tbody>
+    </table>
+
+    <div class="insight-box win"><strong>Older searchers are higher intent on Google.</strong> CTR climbs steadily with age (3.26% at 18–24 → 9.00% at 65+). Older candidates search the role and click decisively. We'll expand Search keyword coverage toward 45+ licensure variants.</div>
+
+    <div class="section-title">Audience — Gender &amp; device</div>
+    <div class="two-col">
+      <table class="report">
+        <thead><tr><th>Gender</th><th class="num">Impr</th><th class="num">Clicks</th><th class="num">CTR</th></tr></thead>
+        <tbody>
+          <tr><td>Female</td><td class="num">3,198</td><td class="num">120</td><td class="num">3.75%</td></tr>
+          <tr><td>Male</td><td class="num">611</td><td class="num">28</td><td class="num win-cell">4.58%</td></tr>
+          <tr><td>Undetermined</td><td class="num">1</td><td class="num">0</td><td class="num">—</td></tr>
+        </tbody>
+      </table>
+      <table class="report">
+        <thead><tr><th>Device</th><th class="num">Impr</th><th class="num">Clicks</th><th class="num">CTR</th></tr></thead>
+        <tbody>
+          <tr><td>Mobile</td><td class="num">3,032</td><td class="num">124</td><td class="num win-cell">4.09%</td></tr>
+          <tr><td>Desktop</td><td class="num">754</td><td class="num">23</td><td class="num">3.05%</td></tr>
+          <tr><td>Tablet</td><td class="num">24</td><td class="num">1</td><td class="num">4.17%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="insight-box"><strong>Audience read:</strong> Female impressions dominate volume (4× male) — consistent with the therapist labor pool. Male CTR is slightly higher per impression. <strong>80% of Google impressions and 84% of clicks are on mobile</strong> at 4.09% CTR — therapist-job search is mobile-first, and landing pages need to be mobile-optimised.</div>
+
+    <div class="insight-box plan"><strong>Two new launches on Google for the next cycle:</strong>
+    <br><br>
+    <strong>1. AI Max with exact-match keywords + text customisation.</strong> We'll move our exact-match keyword set onto Google's AI Max framework with text customisation enabled. This lets Google's AI tailor the ad copy in real time based on the user's specific search query, their search history/intent signals, and the landing page content — so a candidate searching "LCSW jobs Sacramento" sees ad copy that emphasises LCSW + the Sacramento page, while a "therapy careers remote" search sees a different tailored copy. Same keyword targeting precision, dynamically optimised creative on top.
+    <br><br>
+    <strong>2. Performance Max launch.</strong> We'll launch a Performance Max campaign to capture demand across YouTube, Discover, Gmail, Maps, and Search Partners — surfaces our keyword-targeted Search campaign doesn't reach. PMax uses Google's AI to find candidates on any Google-owned surface, paired with our existing creative assets. This is the multi-surface complement to our keyword-targeted Search activity.</div>
+  </div>
+
+  <!-- 03 META -->
+  <div class="panel" id="meta">
+    <div class="panel-header">
+      <div class="panel-eyebrow">03 · Meta</div>
+      <h2 class="panel-title">Meta carries the volume and posted its first apply finishes in June.</h2>
+      <p class="panel-sub">Meta carries <strong>77% of total impressions</strong> and <strong>65% of total clicks</strong>. CTR of 1.15% is healthy for paid social recruitment, CPC of $0.27 is the cheapest of any channel, and <strong>5 apply finishes landed in June (all Washington)</strong> — Meta moved into the conversion column this month. Where we have room to improve is placement quality, age targeting, and bidding strategy — see plan at the bottom of the tab.</p>
+    </div>
+
+    <div class="stat-strip">
+      <div class="stat-box hi"><div class="l">Spend</div><div class="v">$1,251</div><div class="s">41% of total</div></div>
+      <div class="stat-box win"><div class="l">Impressions</div><div class="v">399.6K</div><div class="s">194K unique reach</div></div>
+      <div class="stat-box win"><div class="l">Clicks</div><div class="v">4,608</div><div class="s">65% of total clicks</div></div>
+      <div class="stat-box win"><div class="l">CTR</div><div class="v">1.15%</div><div class="s">in-line for paid social</div></div>
+      <div class="stat-box win"><div class="l">CPC</div><div class="v">$0.27</div><div class="s">cheapest channel</div></div>
+      <div class="stat-box hi"><div class="l">Apply Finishes</div><div class="v">5</div><div class="s">all in June · all WA</div></div>
+    </div>
+
+    <div class="section-title">CA vs WA · Meta</div>
+    <table class="report">
+      <thead><tr><th>Geo</th><th class="num">Spend</th><th class="num">Impr</th><th class="num">Reach</th><th class="num">Clicks</th><th class="num">CTR</th><th class="num">Applies</th><th>Read</th></tr></thead>
+      <tbody>
+        <tr><td><strong>California</strong></td><td class="num">$633.73</td><td class="num">186,153</td><td class="num">95,947</td><td class="num">2,528</td><td class="num win-cell">1.36%</td><td class="num">0</td><td><span class="pill pill-amber">Engagement leader · applies pending</span></td></tr>
+        <tr><td><strong>Washington</strong></td><td class="num">$617.76</td><td class="num">213,495</td><td class="num">98,289</td><td class="num">2,080</td><td class="num">0.97%</td><td class="num win-cell">5</td><td><span class="pill pill-green">Conversion leader</span></td></tr>
+        <tr class="total-row"><td>Total</td><td class="num">$1,251.50</td><td class="num">399,648</td><td class="num">194,236</td><td class="num">4,608</td><td class="num">1.15%</td><td class="num">5</td><td>—</td></tr>
+      </tbody>
+    </table>
+
+    <div class="section-title">Monthly trend · Meta</div>
+    <div class="two-col">
+      <div class="chart-wrap"><div class="chart-wrap-title">Spend &amp; Impressions by Month</div>
+        <div class="chart-canvas short"><canvas id="metaMonth"></canvas></div></div>
+      <div class="chart-wrap"><div class="chart-wrap-title">Apply Finishes by Month — Meta</div>
+        <div class="chart-canvas short"><canvas id="metaApply"></canvas></div></div>
+    </div>
+
+    <div class="section-title">Meta creative themes — performance</div>
+    <table class="report">
+      <thead><tr><th>Theme</th><th class="num">Spend</th><th class="num">Impr</th><th class="num">Clicks</th><th class="num">CTR</th><th class="num">CPC</th><th>Verdict</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Compensation</strong></td><td class="num">$748.88</td><td class="num">214,030</td><td class="num">2,536</td><td class="num">1.18%</td><td class="num">$0.30</td><td><span class="pill pill-green">Volume leader · 60% of clicks</span></td></tr>
+        <tr><td><strong>Reduced Burnout</strong></td><td class="num">$314.67</td><td class="num">105,012</td><td class="num">1,367</td><td class="num win-cell">1.30%</td><td class="num win-cell">$0.23</td><td><span class="pill pill-green">Most efficient · scale</span></td></tr>
+        <tr><td><strong>Clinical Community &amp; Training</strong></td><td class="num">$93.27</td><td class="num">40,500</td><td class="num">329</td><td class="num warn-cell">0.81%</td><td class="num">$0.28</td><td><span class="pill pill-amber">Belongs on LinkedIn</span></td></tr>
+        <tr><td><strong>Compensation &amp; Autonomy</strong></td><td class="num">$79.64</td><td class="num">33,217</td><td class="num">331</td><td class="num">1.00%</td><td class="num">$0.24</td><td><span class="pill pill-blue">Mid · WA-skew</span></td></tr>
+        <tr><td><strong>MBC &amp; Matching</strong></td><td class="num">$3.71</td><td class="num">860</td><td class="num">10</td><td class="num">1.16%</td><td class="num">$0.37</td><td><span class="pill pill-amber">Under-tested</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="insight-box win"><strong>Compensation does the heavy lifting; Reduced Burnout is the efficiency winner.</strong> Compensation drives 60% of Meta clicks ($748 in spend). Reduced Burnout outperforms it on both CTR (1.30% vs 1.18%) and CPC ($0.23 vs $0.30) at a quarter of the spend — we'll re-weight budget toward Burnout in the next cycle. By region: CA's strongest Meta theme is <strong>Compensation</strong> (1.46% CTR); WA's strongest is <strong>Reduced Burnout</strong> (1.24%) and <strong>Compensation &amp; Autonomy</strong> (1.86% on WA-only Meta data).</div>
+
+    <div class="insight-box opp"><strong>What's not working on Meta — Clinical Community &amp; Training (0.81% CTR — the weakest theme on this channel).</strong> The same theme posts 3.12% CTR on LinkedIn in WA — it's not a bad theme, it's professional-context-dependent and doesn't translate to a feed-scroll environment. We'll pull this theme off Meta entirely and reallocate its budget to the two Meta winners: <strong>Reduced Burnout</strong> (1.30% CTR · $0.23 CPC — the most efficient theme in the Meta book) and <strong>Compensation</strong> (the volume leader, especially in CA where it posts 1.46%).</div>
+
+    <div class="section-title">Audience — Meta CTR by age</div>
+    <div class="chart-wrap"><div class="chart-wrap-title">Meta · CTR drops as age increases (inverse of Google)</div>
+      <div class="chart-canvas short"><canvas id="ageMeta"></canvas></div></div>
+    <table class="report" style="margin-top:14px">
+      <thead><tr><th>Age Bracket</th><th class="num">Impressions</th><th class="num">Clicks</th><th class="num">CTR</th><th>Read</th></tr></thead>
+      <tbody>
+        <tr><td>18–24</td><td class="num">20,550</td><td class="num">320</td><td class="num win-cell">1.56%</td><td>Strong · early-career</td></tr>
+        <tr><td>25–34</td><td class="num">65,239</td><td class="num">982</td><td class="num win-cell">1.51%</td><td>Sweet spot</td></tr>
+        <tr><td>35–44</td><td class="num">74,626</td><td class="num">1,036</td><td class="num">1.39%</td><td>Highest impressions · solid</td></tr>
+        <tr><td>45–54</td><td class="num">62,557</td><td class="num">758</td><td class="num">1.21%</td><td>In-line</td></tr>
+        <tr><td>55–64</td><td class="num">67,171</td><td class="num">628</td><td class="num">0.93%</td><td>Declining</td></tr>
+        <tr><td>65+</td><td class="num warn-cell">109,505</td><td class="num">884</td><td class="num warn-cell">0.81%</td><td>27% of impressions · lowest CTR</td></tr>
+      </tbody>
+    </table>
+
+    <div class="section-title">Audience — Meta gender split</div>
+    <div class="two-col">
+      <div class="chart-wrap"><div class="chart-wrap-title">Impressions Split by Gender</div>
+        <div class="chart-canvas short"><canvas id="genMetaImp"></canvas></div></div>
+      <table class="report">
+        <thead><tr><th>Gender</th><th class="num">Impressions</th><th class="num">Clicks</th><th class="num">CTR</th></tr></thead>
+        <tbody>
+          <tr><td>Female</td><td class="num">224,955</td><td class="num">2,257</td><td class="num">1.00%</td></tr>
+          <tr><td>Male</td><td class="num">171,349</td><td class="num">2,307</td><td class="num win-cell">1.35%</td></tr>
+          <tr><td>Unknown</td><td class="num">3,344</td><td class="num">44</td><td class="num">1.32%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="insight-box"><strong>Audience read:</strong> Female impressions dominate volume (57%) — aligned with the therapist labor pool. Male CTR is slightly stronger per impression. On age, the pattern is the inverse of Google: <strong>18–34 engages at 1.5%+ CTR; 65+ engages at only 0.81%</strong>, yet 65+ absorbs 27% of impressions. Tightening age targeting toward 18–54 is a clear efficiency lever.</div>
+
+    <div class="section-title">Meta placement — CTR comparison</div>
+    <table class="report">
+      <thead><tr><th>Placement</th><th class="num">CTR</th><th>Read</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Instagram Stories</strong></td><td class="num win-cell">2.45%</td><td><span class="pill pill-green">Highest CTR · premium placement</span></td></tr>
+        <tr><td><strong>Instagram Feed</strong></td><td class="num win-cell">1.88%</td><td><span class="pill pill-green">Strong · in-context</span></td></tr>
+        <tr><td><strong>Instagram Reels</strong></td><td class="num win-cell">1.70%</td><td><span class="pill pill-green">Strong · video format works</span></td></tr>
+        <tr><td><strong>Facebook Reels Overlay</strong></td><td class="num">1.23%</td><td><span class="pill pill-blue">In-line</span></td></tr>
+        <tr><td><strong>Facebook Feed</strong></td><td class="num">1.14%</td><td><span class="pill pill-blue">In-line</span></td></tr>
+        <tr><td><strong>Audience Network</strong></td><td class="num warn-cell">1.12%</td><td><span class="pill pill-amber">Lower CTR · third-party app inventory</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="insight-box opp"><strong>Audience Network posts a lower CTR than every in-feed placement.</strong> 1.12% on Audience Network vs 1.70–2.45% on Instagram Reels, Feed, and Stories. AN serves ads inside third-party mobile apps, so the audience context is materially different from in-feed engagement.</div>
+
+    <div class="insight-box plan"><strong>Three Meta improvements rolling out:</strong>
+    <br><br>
+    <strong>1. Separate the campaign by placement.</strong> We'll split the single campaign into placement-specific campaigns (Audience Network · Reels · Feed · Stories) so budget and bidding can be controlled independently per placement. Today all placements compete in the same auction logic, which lets the cheapest (Audience Network) absorb most of the budget by default.
+    <br><br>
+    <strong>2. Restrict low-CTR placements.</strong> Once campaigns are split, we'll cap or remove Audience Network and redirect that budget to higher-CTR placements (Instagram Reels at 1.70%, Instagram Stories at 2.45%, Instagram Feed at 1.88%).
+    <br><br>
+    <strong>3. A/B test traffic optimisation vs conversion optimisation.</strong> Today the campaign optimises for traffic (clicks). With Meta now producing apply finishes (5 in June), we have enough conversion signal to test conversion-optimised bidding head-to-head against the current traffic-optimised setup. We'll split spend across the two and read which produces a better cost-per-apply.
+    <br><br>
+    <strong>4. Tighten age targeting to 18–54.</strong> 65+ absorbs 27% of impressions at the worst CTR — excluding 65+ recovers budget for the engaged segments, especially important once Audience Network is restricted.</div>
+  </div>
+
+  <!-- 04 LINKEDIN -->
+  <div class="panel" id="linkedin">
+    <div class="panel-header">
+      <div class="panel-eyebrow">04 · LinkedIn</div>
+      <h2 class="panel-title">The conversion engine — 9 of 14 apply finishes on 40% of the spend.</h2>
+      <p class="panel-sub">LinkedIn carries <strong>22% of impressions and 33% of clicks</strong>, but <strong>9 of 14 apply finishes (6 in May, 3 in June) — all from Washington</strong>. CTR of 2.04% is roughly 2× the Meta blended rate, and the platform is converting therapist clicks into applies at a meaningful rate. This is the channel to scale, and we're adding a Sponsored InMail test to push conversion performance higher.</p>
+    </div>
+
+    <div class="stat-strip">
+      <div class="stat-box hi"><div class="l">Spend</div><div class="v">$1,211</div><div class="s">40% of total</div></div>
+      <div class="stat-box win"><div class="l">Impressions</div><div class="v">113.2K</div><div class="s">22% of total</div></div>
+      <div class="stat-box win"><div class="l">Clicks</div><div class="v">2,312</div><div class="s">33% of total</div></div>
+      <div class="stat-box win"><div class="l">CTR</div><div class="v">2.04%</div><div class="s">~2× Meta blended</div></div>
+      <div class="stat-box warn"><div class="l">CPC</div><div class="v">$0.52</div><div class="s">premium · justified</div></div>
+      <div class="stat-box win"><div class="l">Apply Finishes</div><div class="v">9</div><div class="s">6 May + 3 June · all WA</div></div>
+    </div>
+
+    <div class="section-title">CA vs WA · LinkedIn</div>
+    <table class="report">
+      <thead><tr><th>Geo</th><th class="num">Spend</th><th class="num">Impr</th><th class="num">Clicks</th><th class="num">CTR</th><th class="num">CPC</th><th class="num">Applies</th><th>Read</th></tr></thead>
+      <tbody>
+        <tr><td><strong>California</strong></td><td class="num">$606.97</td><td class="num">67,918</td><td class="num">1,326</td><td class="num">1.95%</td><td class="num">$0.46</td><td class="num">0</td><td><span class="pill pill-amber">Volume leader · applies pending</span></td></tr>
+        <tr><td><strong>Washington</strong></td><td class="num">$604.33</td><td class="num">45,276</td><td class="num">986</td><td class="num win-cell">2.18%</td><td class="num">$0.61</td><td class="num win-cell">9</td><td><span class="pill pill-green">Conversion leader</span></td></tr>
+        <tr class="total-row"><td>Total</td><td class="num">$1,211.30</td><td class="num">113,194</td><td class="num">2,312</td><td class="num">2.04%</td><td class="num">$0.52</td><td class="num">9</td><td>—</td></tr>
+      </tbody>
+    </table>
+
+    <div class="section-title">Monthly trend · LinkedIn</div>
+    <div class="two-col">
+      <div class="chart-wrap"><div class="chart-wrap-title">Spend &amp; Clicks by Month</div>
+        <div class="chart-canvas short"><canvas id="liMonth"></canvas></div></div>
+      <div class="chart-wrap"><div class="chart-wrap-title">Apply Finishes by Month — LinkedIn</div>
+        <div class="chart-canvas short"><canvas id="liApply"></canvas></div></div>
+    </div>
+
+    <div class="section-title">LinkedIn creative themes — performance</div>
+    <table class="report">
+      <thead><tr><th>Theme</th><th class="num">Spend</th><th class="num">Impr</th><th class="num">Clicks</th><th class="num">CTR</th><th class="num">CPC</th><th>Verdict</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Compensation</strong></td><td class="num">$543.09</td><td class="num">52,886</td><td class="num">1,068</td><td class="num">2.02%</td><td class="num win-cell">$0.51</td><td><span class="pill pill-green">Volume leader · balanced CA/WA</span></td></tr>
+        <tr><td><strong>Clinical Community &amp; Training</strong></td><td class="num">$270.70</td><td class="num">19,134</td><td class="num">446</td><td class="num win-cell">2.33%</td><td class="num">$0.61</td><td><span class="pill pill-green">WA winner · 3.12% CTR in WA</span></td></tr>
+        <tr><td><strong>Compensation &amp; Autonomy</strong></td><td class="num">$257.41</td><td class="num">24,048</td><td class="num">525</td><td class="num">2.18%</td><td class="num">$0.49</td><td><span class="pill pill-green">CA winner · 2.49% CTR in CA</span></td></tr>
+        <tr><td><strong>Reduced Burnout</strong></td><td class="num">$70.60</td><td class="num">10,101</td><td class="num">138</td><td class="num warn-cell">1.37%</td><td class="num">$0.51</td><td><span class="pill pill-amber">Belongs on Meta</span></td></tr>
+        <tr><td><strong>MBC &amp; Matching</strong></td><td class="num">$69.50</td><td class="num">7,025</td><td class="num">135</td><td class="num">1.92%</td><td class="num">$0.51</td><td><span class="pill pill-blue">In-line</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="insight-box win"><strong>Themes split cleanly by market on LinkedIn.</strong> <strong>Clinical Community &amp; Training</strong> is the WA winner (3.12% CTR in WA vs 1.61% in CA — the highest cell in the program). <strong>Compensation &amp; Autonomy</strong> is the CA winner (2.49% in CA vs 1.37% in WA). Same platform, same profession, different value-prop preference by market — we're going to lean into this market-specific creative strategy.</div>
+
+    <div class="insight-box opp"><strong>What's not working on LinkedIn — Reduced Burnout (1.37% CTR — the weakest theme on this channel).</strong> The Burnout message lands well on Meta (1.30% CTR — most efficient theme there) but doesn't translate to the LinkedIn professional context. We'll pull this theme off LinkedIn and reallocate its budget to the LinkedIn winners — Clinical Community &amp; Training in WA (3.12% CTR) and Compensation &amp; Autonomy in CA (2.49% CTR).</div>
+
+    <div class="section-title">Audience — Top job titles engaging</div>
+    <table class="report">
+      <thead><tr><th>Member job title</th><th class="num">Impressions</th><th class="num">Clicks</th><th class="num">CTR</th></tr></thead>
+      <tbody>
+        <tr><td>Speech Language Pathologist</td><td class="num">850</td><td class="num">39</td><td class="num win-cell">4.59%</td></tr>
+        <tr><td>Mental Health Therapist</td><td class="num">1,281</td><td class="num">58</td><td class="num win-cell">4.53%</td></tr>
+        <tr><td>Mental Health Counselor</td><td class="num">500</td><td class="num">21</td><td class="num win-cell">4.20%</td></tr>
+        <tr><td>Clinical Specialist</td><td class="num">878</td><td class="num">33</td><td class="num">3.76%</td></tr>
+        <tr><td>Marriage And Family Therapist</td><td class="num">751</td><td class="num">23</td><td class="num">3.06%</td></tr>
+        <tr><td>Therapist</td><td class="num">2,224</td><td class="num">65</td><td class="num">2.92%</td></tr>
+        <tr><td>Psychotherapist</td><td class="num">976</td><td class="num">28</td><td class="num">2.87%</td></tr>
+        <tr><td>Occupational Therapist</td><td class="num">895</td><td class="num">22</td><td class="num">2.46%</td></tr>
+        <tr><td>Owner</td><td class="num">2,608</td><td class="num">54</td><td class="num">2.07%</td></tr>
+        <tr><td>Licensed Mental Health Counselor</td><td class="num">1,013</td><td class="num">18</td><td class="num warn-cell">1.78%</td></tr>
+        <tr><td>Mental Health Specialist</td><td class="num">1,802</td><td class="num">30</td><td class="num warn-cell">1.66%</td></tr>
+        <tr><td>Counselor</td><td class="num">856</td><td class="num">14</td><td class="num warn-cell">1.64%</td></tr>
+      </tbody>
+    </table>
+
+    <div class="insight-box win"><strong>Targeting is hitting the right pool.</strong> "Mental Health Therapist", "Mental Health Counselor", and "Speech Language Pathologist" all engage at 4.2%+ CTR — exactly the audience Two Chairs wants. The job-title pattern confirms our LinkedIn targeting is correctly tuned to the practitioner segment.</div>
+
+    <div class="insight-box plan"><strong>Adding LinkedIn Sponsored InMail to the mix.</strong> LinkedIn's Sponsored Content (the format we're currently running) is working as the conversion engine — 9 applies, 2.04% CTR. We're layering Sponsored InMail on top because in prior recruitment campaigns we've seen materially better conversion rates with InMail vs Sponsored Content alone — direct-to-inbox delivery to high-intent therapist titles, opened in a 1:1 context rather than a feed scroll. We'll run InMail to the same WA-resonant themes (Clinical Community &amp; Training) and the CA-resonant themes (Compensation &amp; Autonomy) and measure CTR + apply-finish rate against the current Sponsored Content baseline.</div>
+  </div>
+
+  <!-- 05 CA vs WA -->
+  <div class="panel" id="cawa">
+    <div class="panel-header">
+      <div class="panel-eyebrow">05 · California vs Washington</div>
+      <h2 class="panel-title">Washington is converting. California is engaging. Our plan closes the gap.</h2>
+      <p class="panel-sub">Spend is roughly even between markets ($1,499 CA vs $1,482 WA — within 1%). Impressions are roughly even (49% / 51%). Clicks slightly favor California (53% / 47%). <strong>All 14 apply finishes came from Washington.</strong> The data points to two solvable causes: Meta placement quality (heavy Audience Network skew) and creative-message fit (CA prefers compensation framing, not the mentorship framing that's converting WA). We're addressing both.</p>
+    </div>
+
+    <div class="hero-quote">"California is generating strong engagement on our targeted audience. The next step is matching the value prop to what CA candidates respond to and improving placement quality on Meta — both already in motion."</div>
+
+    <div class="section-title">The split — at a glance</div>
+    <div class="region-grid">
+      <div class="region-card amber"><div class="region-head">🟧 California</div><div class="region-sub">Engagement leader · applies pending</div>
+        <div class="region-stats">
+          <div class="region-stat"><div class="l">Spend</div><div class="v">$1,499</div></div>
+          <div class="region-stat"><div class="l">Clicks</div><div class="v">3,768</div></div>
+          <div class="region-stat"><div class="l">Applies</div><div class="v">0</div></div>
+        </div>
+        <p class="region-prose">Wins on Meta CTR (1.36% vs 0.97%), wins on click share (53%), wins on cheapest Google CPC ($2.85). Strong upper-funnel signal — we'll tune the value-prop emphasis and placement quality to convert it.</p></div>
+      <div class="region-card"><div class="region-head">🟩 Washington</div><div class="region-sub">Conversion engine</div>
+        <div class="region-stats">
+          <div class="region-stat"><div class="l">Spend</div><div class="v">$1,482</div></div>
+          <div class="region-stat"><div class="l">Clicks</div><div class="v">3,108</div></div>
+          <div class="region-stat"><div class="l">Applies</div><div class="v" style="color:#00754a">14</div></div>
+        </div>
+        <p class="region-prose">Lower Meta CTR but higher LI CTR. Implied CPL roughly <strong>$106 per apply finish</strong>. All 14 applies — both LinkedIn (9) and Meta (5) — landed here.</p></div>
+    </div>
+
+    <div class="section-title">Channel-by-channel · CA vs WA</div>
+    <div class="chart-wrap" style="margin-top:8px"><div class="chart-wrap-title">CTR — California vs Washington by Channel</div>
+      <div class="chart-canvas"><canvas id="cawaCtr"></canvas></div></div>
+    <table class="report" style="margin-top:14px">
+      <thead><tr><th>Channel</th><th class="num">CA Spend</th><th class="num">CA Clicks</th><th class="num">CA CTR</th><th class="num">CA Applies</th><th class="num">WA Spend</th><th class="num">WA Clicks</th><th class="num">WA CTR</th><th class="num">WA Applies</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Google</strong></td><td class="num">$302</td><td class="num">106</td><td class="num">3.80%</td><td class="num">0</td><td class="num">$260</td><td class="num">42</td><td class="num">4.13%</td><td class="num">0</td></tr>
+        <tr><td><strong>Meta</strong></td><td class="num">$634</td><td class="num">2,528</td><td class="num win-cell">1.36%</td><td class="num">0</td><td class="num">$618</td><td class="num">2,080</td><td class="num">0.97%</td><td class="num win-cell">5</td></tr>
+        <tr><td><strong>LinkedIn</strong></td><td class="num">$607</td><td class="num">1,326</td><td class="num">1.95%</td><td class="num">0</td><td class="num">$604</td><td class="num">986</td><td class="num win-cell">2.18%</td><td class="num win-cell">9</td></tr>
+        <tr class="total-row"><td>Total</td><td class="num">$1,499</td><td class="num">3,768</td><td class="num">—</td><td class="num">0</td><td class="num">$1,482</td><td class="num">3,108</td><td class="num">—</td><td class="num win-cell">14</td></tr>
+      </tbody>
+    </table>
+
+    <div class="section-title">Value props that resonate — side-by-side</div>
+    <div class="two-col">
+      <div class="region-card amber">
+        <div class="region-head">CA — what resonates</div>
+        <div class="region-sub">Money + control</div>
+        <p class="region-prose">
+        <strong>1. Compensation &amp; Autonomy</strong> (LinkedIn 2.49% CTR — best CA cell)<br>
+        <strong>2. Compensation</strong> (Meta 1.46%, LI 1.95%)<br>
+        <strong>3. Reduced Burnout</strong> (Meta 1.40%)<br><br>
+        California therapists respond to material/practice-control language — compensation, autonomy, lifestyle relief. Mentorship/training language under-performs in CA (LI Clinical Community &amp; Training only 1.61%).
+        </p>
+      </div>
+      <div class="region-card blue">
+        <div class="region-head">WA — what resonates</div>
+        <div class="region-sub">Mentorship + quality-of-life</div>
+        <p class="region-prose">
+        <strong>1. Clinical Community &amp; Training</strong> (LinkedIn 3.12% CTR — best WA cell, best cell overall)<br>
+        <strong>2. Compensation &amp; Autonomy</strong> (Meta 1.86% — the autonomy angle, not pure comp)<br>
+        <strong>3. Reduced Burnout</strong> (Meta 1.24%, LI 1.64%)<br><br>
+        Washington therapists respond to professional-development and team/quality-of-life framing. Pure Compensation actually <em>under-performs</em> in WA on Meta (0.87% vs CA's 1.46%).
+        </p>
+      </div>
+    </div>
+
+    <div class="insight-box plan"><strong>How we close the California gap:</strong>
+    <br><br>
+    <strong>1. Match the value prop to the market.</strong> Lead CA creative with Compensation &amp; Autonomy on LinkedIn and Compensation on Meta — the themes that posted the highest CA CTRs. Keep the WA-resonant themes (Clinical Community &amp; Training, Reduced Burnout) running in WA.
+    <br><br>
+    <strong>2. Improve Meta placement quality.</strong> Separate the Meta campaign by placement and restrict Audience Network — CA is over-indexed on AN impressions, which is the lowest-CTR placement. Moving CA's Meta delivery into Instagram Reels / Feed / Stories should lift click quality.
+    <br><br>
+    <strong>3. Layer LinkedIn Sponsored InMail.</strong> Direct-to-inbox delivery to CA-targeted therapist titles, carrying the Compensation &amp; Autonomy message — historically a stronger conversion format than feed-based Sponsored Content.
+    <br><br>
+    <strong>4. Bring CA into Google's new format launches.</strong> AI Max with text customisation and Performance Max will both run in CA and WA — broadening the surface area for high-intent CA candidates.</div>
+  </div>
+
+  <!-- 06 WHAT WE'LL IMPROVE -->
+  <div class="panel" id="recs">
+    <div class="panel-header">
+      <div class="panel-eyebrow">06 · What we'll improve — next-cycle plan</div>
+      <h2 class="panel-title">Seven specific moves we're rolling out across the three channels.</h2>
+      <p class="panel-sub">Organised by channel. Most of these redirect existing budget into higher-performing surfaces, formats, and creative themes; point 7 specifically reallocates spend across themes — scaling the winners on each channel and cutting the underperformers.</p>
+    </div>
+
+    <div class="recs-grid">
+
+      <div class="rec-card meta-rec">
+        <div class="head"><span class="num">1</span>Separate the Meta campaign by placement<span class="channel-tag">META</span></div>
+        <div class="body">We'll split the single Meta campaign into placement-specific campaigns — Audience Network, Instagram Reels, Instagram Feed, Instagram Stories, Facebook Feed — so each placement has its own budget and bidding logic. Today all placements compete in the same auction, which lets the cheapest (Audience Network) absorb most impression share by default. Separating gives us per-placement control.</div>
+      </div>
+
+      <div class="rec-card meta-rec">
+        <div class="head"><span class="num">2</span>Restrict Audience Network and reallocate to higher-CTR placements<span class="channel-tag">META</span></div>
+        <div class="body">Audience Network posts a lower CTR than every in-feed placement (1.12% on AN vs 1.70%+ on Instagram Reels, Feed, and Stories). Once campaigns are split, we'll cap or remove AN and redirect that budget into Instagram Reels / Feed / Stories where engagement is materially stronger.</div>
+      </div>
+
+      <div class="rec-card meta-rec">
+        <div class="head"><span class="num">3</span>A/B test traffic optimisation vs conversion optimisation<span class="channel-tag">META</span></div>
+        <div class="body">Today the Meta campaign optimises for traffic (link clicks). With Meta now producing apply finishes (5 in June), we have enough conversion signal to test conversion-optimised bidding head-to-head against traffic-optimised bidding. We'll split spend between the two setups on identical creative and audience, and read which produces a better cost-per-apply finish.</div>
+      </div>
+
+      <div class="rec-card google-rec">
+        <div class="head"><span class="num">4</span>Launch AI Max with exact-match + text customisation<span class="channel-tag">GOOGLE</span></div>
+        <div class="body">We'll move our exact-match keyword set onto Google's AI Max framework with text customisation turned on. This lets Google's AI tailor the ad copy dynamically based on (a) the user's specific search query, (b) their intent signals, and (c) the landing page content — so someone searching "LCSW jobs Sacramento" sees ad copy that emphasises LCSW + the Sacramento page, while "therapy careers remote" sees a different tailored version. Same keyword precision, AI-optimised creative on top.</div>
+      </div>
+
+      <div class="rec-card google-rec">
+        <div class="head"><span class="num">5</span>Launch Performance Max on Google<span class="channel-tag">GOOGLE</span></div>
+        <div class="body">We'll launch a Performance Max campaign to extend our reach into YouTube, Discover, Gmail, Maps, and Search Partners — Google-owned surfaces our keyword-targeted Search campaign doesn't cover. PMax uses Google's AI to find candidates across all surfaces using our existing creative assets. This is the multi-surface complement to our keyword-targeted Search activity, giving us a second high-intent demand stream from Google.</div>
+      </div>
+
+      <div class="rec-card li-rec">
+        <div class="head"><span class="num">6</span>Add LinkedIn Sponsored InMail<span class="channel-tag">LINKEDIN</span></div>
+        <div class="body">LinkedIn Sponsored Content is already our conversion engine (9 of 14 applies). We're layering Sponsored InMail on top because in prior recruitment campaigns we've seen materially better conversion rates with InMail vs Sponsored Content alone — direct-to-inbox delivery to targeted therapist titles, read in a 1:1 context rather than a feed scroll. We'll run InMail with the CA-resonant themes (Compensation &amp; Autonomy) and the WA-resonant themes (Clinical Community &amp; Training) and measure apply-finish rate against the Sponsored Content baseline.</div>
+      </div>
+
+      <div class="rec-card budget-rec">
+        <div class="head"><span class="num">7</span>Reallocate budget toward the winning creative themes — and pull spend off the underperformers<span class="channel-tag">CREATIVE BUDGET</span></div>
+        <div class="body">The theme-level data shows clear winners and clear underperformers on each channel. We'll redirect budget accordingly:
+        <br><br>
+        <strong>Scale up where it's working:</strong>
+        <br>· <strong>Reduced Burnout on Meta</strong> — the most efficient theme (1.30% CTR · $0.23 CPC), currently only ~25% of Meta spend despite outperforming Compensation on both CTR and CPC.
+        <br>· <strong>Clinical Community &amp; Training on LinkedIn (WA)</strong> — the highest-CTR cell in the entire program (3.12%). Increase WA LinkedIn budget weighted to this theme.
+        <br>· <strong>Compensation &amp; Autonomy on LinkedIn (CA)</strong> — the highest-CTR cell for California (2.49%). Increase CA LinkedIn budget weighted to this theme.
+        <br><br>
+        <strong>Cut spend where it's not working:</strong>
+        <br>· <strong>Clinical Community &amp; Training on Meta</strong> — 0.81% CTR, the weakest theme on the channel. Pull off Meta entirely; the theme works on LinkedIn, not in a feed-scroll context.
+        <br>· <strong>Reduced Burnout on LinkedIn</strong> — 1.37% CTR, the weakest theme on the channel. Pull off LinkedIn; the theme works on Meta, not in a professional-context.
+        <br><br>
+        Net effect: same total creative budget, redistributed so each theme runs only on the channel where it actually performs.</div>
+      </div>
+
+    </div>
+
+    <div class="insight-box win" style="margin-top:18px;text-align:center;font-size:14px">
+      <strong>Bottom line:</strong> The campaign foundation is solid — reach, engagement, and message-fit signals are all reading clearly. The next cycle's work is execution: better Meta placements, Google's two new formats, LinkedIn InMail as the new conversion layer, and creative budget weighted toward the themes that are working on each channel. We expect California to move into the apply-finish column on the back of these changes.
+    </div>
+  </div>
+
+  <div class="footer">JOVEO × TWO CHAIRS · Therapist Recruitment · May 18 – June 9, 2026</div>
+</div>
+
+<script>
+const DATA = {
+  age_google: { '18-24':3.26, '25-34':3.30, '35-44':3.88, '45-54':4.07, '55-64':5.90, '65+':9.00 },
+  age_meta:   { '18-24':1.56, '25-34':1.51, '35-44':1.39, '45-54':1.21, '55-64':0.93, '65+':0.81 }
+};
+
+document.querySelectorAll('.tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+  });
+});
+
+Chart.defaults.color = '#6b6b66';
+Chart.defaults.font.family = 'DM Sans';
+Chart.defaults.font.size = 11;
+
+new Chart(document.getElementById('ageGoogle'), {
+  type:'bar',
+  data:{labels:Object.keys(DATA.age_google), datasets:[{label:'Google CTR (%)', data:Object.values(DATA.age_google), backgroundColor:'#00a651', borderRadius:5}]},
+  options:{maintainAspectRatio:false, responsive:true, plugins:{legend:{display:false}}, scales:{y:{ticks:{callback:v=>v+'%'}}}}
+});
+
+new Chart(document.getElementById('metaMonth'), {
+  type:'bar',
+  data:{
+    labels:['May (18-31)','June (1-9)'],
+    datasets:[
+      {label:'Spend ($)', data:[684.50,566.99], backgroundColor:'#00a651', borderRadius:5, yAxisID:'y', barThickness:38},
+      {label:'Impressions (K)', data:[238.3,161.4], type:'line', borderColor:'#0066cc', backgroundColor:'#0066cc', yAxisID:'y2', tension:0.3, pointRadius:5}
+    ]
+  },
+  options:{maintainAspectRatio:false, responsive:true,
+    plugins:{legend:{labels:{font:{size:10},boxWidth:11}}},
+    scales:{
+      y:{position:'left', ticks:{callback:v=>'$'+v}},
+      y2:{position:'right', grid:{display:false}, ticks:{callback:v=>v+'K'}}
+    }
+  }
+});
+
+new Chart(document.getElementById('metaApply'), {
+  type:'bar',
+  data:{labels:['May','June'], datasets:[{label:'Apply Finishes', data:[0,5], backgroundColor:['#9b9b96','#00a651'], borderRadius:6, barThickness:60}]},
+  options:{maintainAspectRatio:false, responsive:true, plugins:{legend:{display:false}}, scales:{y:{beginAtZero:true, ticks:{stepSize:1}}}}
+});
+
+new Chart(document.getElementById('ageMeta'), {
+  type:'bar',
+  data:{labels:Object.keys(DATA.age_meta), datasets:[{label:'Meta CTR (%)', data:Object.values(DATA.age_meta), backgroundColor:'#0066cc', borderRadius:5}]},
+  options:{maintainAspectRatio:false, responsive:true, plugins:{legend:{display:false}}, scales:{y:{ticks:{callback:v=>v+'%'}}}}
+});
+
+new Chart(document.getElementById('genMetaImp'), {
+  type:'doughnut',
+  data:{labels:['Female','Male','Unknown'], datasets:[{data:[224955,171349,3344], backgroundColor:['#d85a30','#0066cc','#9b9b96'], borderWidth:0}]},
+  options:{maintainAspectRatio:false, responsive:true, cutout:'55%', plugins:{legend:{position:'right', labels:{font:{size:11},boxWidth:11}}}}
+});
+
+new Chart(document.getElementById('liMonth'), {
+  type:'bar',
+  data:{
+    labels:['May (18-31)','June (1-9)'],
+    datasets:[
+      {label:'Spend ($)', data:[614.26,597.04], backgroundColor:'#0066cc', borderRadius:5, yAxisID:'y', barThickness:38},
+      {label:'Clicks', data:[1178,1134], type:'line', borderColor:'#00a651', backgroundColor:'#00a651', yAxisID:'y2', tension:0.3, pointRadius:5}
+    ]
+  },
+  options:{maintainAspectRatio:false, responsive:true,
+    plugins:{legend:{labels:{font:{size:10},boxWidth:11}}},
+    scales:{
+      y:{position:'left', ticks:{callback:v=>'$'+v}},
+      y2:{position:'right', grid:{display:false}}
+    }
+  }
+});
+
+new Chart(document.getElementById('liApply'), {
+  type:'bar',
+  data:{labels:['May','June'], datasets:[{label:'Apply Finishes', data:[6,3], backgroundColor:['#00a651','#00754a'], borderRadius:6, barThickness:60}]},
+  options:{maintainAspectRatio:false, responsive:true, plugins:{legend:{display:false}}, scales:{y:{beginAtZero:true, ticks:{stepSize:1}}}}
+});
+
+new Chart(document.getElementById('cawaCtr'), {
+  type:'bar',
+  data:{labels:['Google','Meta','LinkedIn'], datasets:[
+    {label:'California', data:[3.80,1.36,1.95], backgroundColor:'#ef9f27', borderRadius:5, barThickness:50},
+    {label:'Washington', data:[4.13,0.97,2.18], backgroundColor:'#0066cc', borderRadius:5, barThickness:50}
+  ]},
+  options:{maintainAspectRatio:false, responsive:true,
+    plugins:{legend:{labels:{font:{size:11},boxWidth:12}}},
+    scales:{y:{ticks:{callback:v=>v+'%'}, title:{display:true,text:'CTR'}}}}
+});
+</script>
+</body>
+</html>
